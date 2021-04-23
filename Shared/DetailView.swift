@@ -16,13 +16,19 @@ struct DetailView: View {
     @State private var showingDeleteAlert = false
     
     let book: Book
-    
+    let formatter = DateFormatter()
+ 
     var body: some View {
-        GeometryReader { geometry in
+        formatter.dateFormat = "E, MMMM dd yyyy @ hh:mm aaa"
+        return GeometryReader { geometry in
             VStack {
                 ZStack(alignment: .bottomTrailing) {
+                  
                     Image(self.book.genre ?? "Fantasy")
                         .frame(maxWidth: geometry.size.width)
+                    
+     
+                    
                     Text(self.book.genre?.uppercased() ?? "FANTASY")
                         .font(.caption)
                         .fontWeight(.black)
@@ -35,6 +41,7 @@ struct DetailView: View {
                 Text(self.book.author ?? "Unkown Author")
                     .font(.title)
                     .foregroundColor(.secondary)
+                Text("Review Created: \(formatter.string(from: self.book.date ?? Date()))")
                 Text(self.book.review ?? "No review")
                     .padding()
                 
